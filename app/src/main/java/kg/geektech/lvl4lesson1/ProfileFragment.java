@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
                 e.printStackTrace();
             }
             binding.roundImageViewBody.setImageBitmap(image);
+            /**/
         }
     }
 }
