@@ -3,18 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".NewsFragment">
-
+<com.google.android.material.textfield.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:boxStrokeColor="@color/black"
+    android:outlineSpotShadowColor="@color/black"
+    app:boxBackgroundColor="@color/black"
+    app:hintTextColor="@color/black"
+    app:startIconDrawable="@drawable/ic_mail"
+    android:textColorHint="@color/black">
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:inputType="textCapSentences"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="press Email"
+        android:backgroundTint="@color/orange_inv"/>
+</com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/btnSave"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
