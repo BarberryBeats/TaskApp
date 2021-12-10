@@ -10,19 +10,19 @@
 <com.google.android.material.textfield.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:boxStrokeColor="@color/black"
-    android:outlineSpotShadowColor="@color/black"
-    app:boxBackgroundColor="@color/black"
-    app:hintTextColor="@color/black"
+    app:boxStrokeColor="@color/orange"
+    android:outlineSpotShadowColor="@color/orange"
+    app:boxBackgroundColor="@color/orange"
+    app:hintTextColor="@color/orange"
     app:startIconDrawable="@drawable/ic_mail"
-    android:textColorHint="@color/black">
+    android:textColorHint="@color/orange">
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:inputType="textCapSentences"
         android:layout_height="wrap_content"
         android:hint="press Email"
-        android:backgroundTint="@color/orange_inv"/>
+        android:backgroundTint="@color/gray"/>
 </com.google.android.material.textfield.TextInputLayout>
 
 

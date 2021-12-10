@@ -12,6 +12,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -51,10 +53,18 @@ public class ProfileFragment extends Fragment {
                 bundle.putParcelable("image", image4);
                 guess.putExtras(bundle);*/
 
-                Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                Intent cameraIntent = new Intent(Intent.ACTION_PICK);
                 cameraIntent.setType("image/*");
                 startActivityForResult(cameraIntent, 1000);
 
+            }
+
+        });
+        binding.imageback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+                navController.navigateUp();
             }
         });
     }

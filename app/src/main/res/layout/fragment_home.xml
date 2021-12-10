@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -15,6 +16,49 @@
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textHello"
+        android:text="hello!"
+        android:textSize="60sp"
+        android:textColor="@color/orange"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="164dp"
+        android:fontFamily="@font/gropled_bold"/>
+    <TextView
+        android:id="@+id/textfirstproject1"
+        app:layout_constraintTop_toBottomOf="@id/textHello"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="this is my first"
+        android:textSize="20sp"
+        android:fontFamily="@font/gropled_bold"/>
+    <TextView
+        android:id="@+id/textfirstproject2"
+        app:layout_constraintTop_toBottomOf="@id/textfirstproject1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="little project *wow*"
+        android:textSize="20sp"
+        android:fontFamily="@font/gropled_bold"/>
+    <TextView
+        android:id="@+id/textfirstproject3"
+        app:layout_constraintTop_toBottomOf="@id/textfirstproject2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I wish you a pleasant use!"
+        android:textSize="20sp"
+        android:fontFamily="@font/gropled_bold"/>
+
 
     <Button
         android:id="@+id/btnNextFragment"
@@ -25,6 +69,7 @@
         android:backgroundTint="@color/orange"
         android:fontFamily="@font/gropled_bold"
         android:text="next fragment"
+        android:layout_marginTop="34dp"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
