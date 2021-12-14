@@ -47,11 +47,6 @@ public class ProfileFragment extends Fragment {
         binding.editphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent guess = new Intent(Intent.ACTION_GET_CONTENT);
-                Bundle bundle = new Bundle();
-                Bitmap image4 = BitmapFactory.decodeResource(getResources(), R.drawable.ic_add);
-                bundle.putParcelable("image", image4);
-                guess.putExtras(bundle);*/
 
                 Intent cameraIntent = new Intent(Intent.ACTION_PICK);
                 cameraIntent.setType("image/*");
@@ -74,13 +69,8 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK && null != data){
             Uri selectedImage = data.getData();
-            Bitmap image = null;
-            try {
-                image = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            binding.roundImageViewBody.setImageBitmap(image);
+
+            binding.roundImageViewBody.setImageURI(selectedImage);
             /**/
         }
     }

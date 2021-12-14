@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:inputType="textCapSentences"
         android:layout_height="wrap_content"
-        android:hint="press Email"
+        android:hint="Enter news"
         android:backgroundTint="@color/gray"/>
 </com.google.android.material.textfield.TextInputLayout>
 

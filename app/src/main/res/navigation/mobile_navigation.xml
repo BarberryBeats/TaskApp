@@ -28,8 +28,13 @@
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/navigation_profile"
         android:name="kg.geektech.lvl4lesson1.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/editNewsFragment"
+        android:name="kg.geektech.lvl4lesson1.EditNewsFragment"
+        android:label="fragment_edit_news"
+        tools:layout="@layout/fragment_edit_news" />
 </navigation>
