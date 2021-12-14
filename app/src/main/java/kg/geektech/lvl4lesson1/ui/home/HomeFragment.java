@@ -40,10 +40,12 @@ public class HomeFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onClick(int position) {
+                getItem(position);
                 News news = adapter.getItem(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("key", news);
                 getParentFragmentManager().setFragmentResult("key1", bundle);
+
                openFragment2();
                 getParentFragmentManager().setFragmentResultListener("ed_news", getViewLifecycleOwner(), new FragmentResultListener() {
                     @Override
@@ -63,6 +65,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getItem(int position) {
+        getParentFragmentManager().setFragmentResultListener("ed_news", getViewLifecycleOwner(), new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                News news = (News) result.getSerializable("edit_news");
+                adapter.changeItem(news, position);
+            }
+        });
     }
 
     private void setAlert(int position) {

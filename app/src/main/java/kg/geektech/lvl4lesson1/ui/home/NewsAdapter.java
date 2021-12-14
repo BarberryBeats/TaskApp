@@ -65,7 +65,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public void changeItem(News news, int position) {
-
+        list.set(position,news);
+list.set(position,news);
     }
 
     public String getItem1(int position) {
