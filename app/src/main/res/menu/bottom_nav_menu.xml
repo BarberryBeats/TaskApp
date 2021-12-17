@@ -20,9 +20,6 @@
         android:icon="@drawable/ic_person"
         android:title="@string/title_profile" />
 
-    <item
-        android:id="@+id/editNewsFragment"
-        android:icon="@drawable/ic_person"
-        android:title="@string/title_profile" />
+
 
 </menu>

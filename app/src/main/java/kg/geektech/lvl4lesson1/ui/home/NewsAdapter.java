@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import kg.geektech.lvl4lesson1.News;
 import kg.geektech.lvl4lesson1.OnItemClickListener;
@@ -20,9 +22,11 @@ import kg.geektech.lvl4lesson1.databinding.ItemNewsBinding;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private ArrayList<News> list;
-    private TextView title;
+    private TextView title, time;
     private OnItemClickListener onItemClickListener;
     private Context context;
+
+
 
     public NewsAdapter(Context context) {
         list = new ArrayList<>();
@@ -49,7 +53,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void addItem(News news) {
         list.add(0, news);
         Log.e("TAG", "addItem: ");
-
+notifyItemInserted(0);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -80,6 +84,7 @@ list.set(position,news);
             super(itemView);
             this.context = context;
             title = itemView.findViewById(R.id.textTitle);
+            time = itemView.findViewById(R.id.textTime);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,7 +101,10 @@ list.set(position,news);
         }
 
         public void onBind(News news) {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM.dd  HH:mm:ss");
+            String a = sdf.format(news.getCreatedAt());
             title.setText(news.getTitle());
+           time.setText(a);
             if (getAdapterPosition() % 2 == 1) {
                 itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.black));
             }

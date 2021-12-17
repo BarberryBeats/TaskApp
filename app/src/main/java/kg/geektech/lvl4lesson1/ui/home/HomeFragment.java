@@ -37,34 +37,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter(getContext());
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                getItem(position);
-                News news = adapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("key", news);
-                getParentFragmentManager().setFragmentResult("key1", bundle);
-
-               openFragment2();
-                getParentFragmentManager().setFragmentResultListener("ed_news", getViewLifecycleOwner(), new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        Log.e("TAG", "onFragmentResult: ");
-                        News news = (News) result.getSerializable("edit_news");
-                        Log.d("Home", "text = " + news.getTitle());
-                        adapter.changeItem(news, position);
-
-                    }
-                });
-            }
-
-            @Override
-            public void onLongClick(int position) {
-                setAlert(position);
-            }
-        });
-
     }
 
     private void getItem(int position) {
@@ -89,7 +61,6 @@ public class HomeFragment extends Fragment {
                 dialog.dismiss();
                 adapter.notifyItemRemoved(position);
                 adapter.removelist(position);
-
 
             }
         });
@@ -120,8 +91,38 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initListener();
+        create();
     }
 
+    private void create(){
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                getItem(position);
+                News news = adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("key", news);
+                getParentFragmentManager().setFragmentResult("key1", bundle);
+                openFragment2();
+                getParentFragmentManager().setFragmentResultListener("ed_news", getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Log.e("TAG", "onFragmentResult: ");
+                        News news = (News) result.getSerializable("edit_news");
+                        Log.d("Home", "text = " + news.getTitle());
+                        adapter.changeItem(news, position);
+
+                    }
+                });
+            }
+
+            @Override
+            public void onLongClick(int position) {
+                setAlert(position);
+            }
+        });
+
+    }
     private void initListener() {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +136,7 @@ public class HomeFragment extends Fragment {
                 Log.e("TAG", "onFragmentResult: ");
 
                 News news = (News) result.getSerializable("news");
-                Log.d("Home", "text = " + news.getTitle());
+                Log.d("Home", "text = " + news.getTitle() + news.getCreatedAt());
                 adapter.addItem(news);
             }
 

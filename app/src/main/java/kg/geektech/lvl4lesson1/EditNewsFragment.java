@@ -57,7 +57,6 @@ public class EditNewsFragment extends Fragment {
             Toast.makeText(getContext(), "Поле не должно быть пустым", Toast.LENGTH_SHORT).show();
         } else {
             News news = new News(text, System.currentTimeMillis());
-
             Bundle bundle = new Bundle();
             bundle.putSerializable("edit_news", news);
             getParentFragmentManager().setFragmentResult("ed_news", bundle);
