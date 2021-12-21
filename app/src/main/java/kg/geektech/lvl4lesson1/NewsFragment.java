@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import kg.geektech.lvl4lesson1.databinding.FragmentHomeBinding;
 import kg.geektech.lvl4lesson1.databinding.FragmentNewsBinding;
+import kg.geektech.lvl4lesson1.ui.home.NewsAdapter;
 
 public class NewsFragment extends Fragment {
     private FragmentNewsBinding binding;
+    private News news;
 
 
     @Override
@@ -31,6 +33,8 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        news = (News) requireArguments().getSerializable("news");
+        if (news != null) binding.editText.setText(news.getTitle());
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,16 +51,17 @@ public class NewsFragment extends Fragment {
     }
 
     private void save() {
-        String text = binding.editText.getText().toString();
-        if (binding.editText.getText().toString().isEmpty()){
-            Toast.makeText(getContext(), "Поле не должно быть пустым", Toast.LENGTH_SHORT).show();
-        }else{
-        News news = new News(text, System.currentTimeMillis());
         Bundle bundle = new Bundle();
-        bundle.putSerializable("news", news);
-        bundle.putSerializable("edit_news", news);
-        getParentFragmentManager().setFragmentResult("rk_news", bundle);
-        getParentFragmentManager().setFragmentResult("ed_news", bundle);
-        close();}
+        String text = binding.editText.getText().toString();
+        if (news == null){
+            news = new News(text, System.currentTimeMillis());
+            bundle.putSerializable("news", news);
+            getParentFragmentManager().setFragmentResult("rk_news", bundle);
+        }else{
+            news.setTitle(text);
+            bundle.putSerializable("news", news);
+            getParentFragmentManager().setFragmentResult("rk_news_update", bundle);
+        }
+        close();
     }
 }

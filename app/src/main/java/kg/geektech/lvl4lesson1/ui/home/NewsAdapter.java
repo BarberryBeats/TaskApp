@@ -54,6 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         list.add(0, news);
         Log.e("TAG", "addItem: ");
 notifyItemInserted(0);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -68,11 +69,14 @@ notifyItemInserted(0);
         list.remove(position);
     }
 
-    public void changeItem(News news, int position) {
-        list.set(position,news);
-list.set(position,news);
+    public void changeItem(News news) {
+        int index = list.indexOf(news);
+        list.set(index,news);
+        notifyItemChanged(index);
     }
-
+    public void obnovit() {
+        notifyDataSetChanged();
+    }
     public String getItem1(int position) {
         return list.get(position).toString();
     }
