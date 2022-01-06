@@ -1,6 +1,7 @@
 package kg.geektech.lvl4lesson1.ui.home;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
+import kg.geektech.lvl4lesson1.App;
 import kg.geektech.lvl4lesson1.News;
 import kg.geektech.lvl4lesson1.OnItemClickListener;
 import kg.geektech.lvl4lesson1.R;
@@ -22,10 +29,9 @@ import kg.geektech.lvl4lesson1.databinding.ItemNewsBinding;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private ArrayList<News> list;
-    private TextView title, time;
     private OnItemClickListener onItemClickListener;
     private Context context;
-
+    private News news;
 
 
     public NewsAdapter(Context context) {
@@ -57,6 +63,12 @@ notifyItemInserted(0);
 
     }
 
+    public void addItems(List<News> list) {
+        this.list.clear();
+this.list.addAll(list);
+notifyDataSetChanged();
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -66,9 +78,10 @@ notifyItemInserted(0);
     }
 
     public void removelist(int position) {
-        list.remove(position);
-    }
 
+        list.remove(position);
+
+    }
     public void changeItem(News news) {
         int index = list.indexOf(news);
         list.set(index,news);
@@ -77,12 +90,35 @@ notifyItemInserted(0);
     public void obnovit() {
         notifyDataSetChanged();
     }
+
     public String getItem1(int position) {
         return list.get(position).toString();
     }
 
+    public static Comparator<News> newsAZComparator = new Comparator<News>() {
+        @Override
+        public int compare(News p1, News p2) {
+            return p1.getTitle().compareTo(p2.getTitle());
+        }
+    };
+
+    public static Comparator<News> newsDateComparator = new Comparator<News>() {
+        @Override
+        public int compare(News p1, News p2) {
+            return (int) (p1.getCreatedAt() - p2.getCreatedAt());
+        }
+    };
+
+    public void sort1() {
+        Collections.sort(list,newsAZComparator);
+        notifyDataSetChanged();
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Context context;
+        private TextView title, time;
+
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);

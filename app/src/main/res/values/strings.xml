@@ -8,6 +8,7 @@
     <string name="title_profile">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="client_id">418923837193-nnpqpb8771hin93c691hh6gvjov1tcl0.apps.googleusercontent.com</string>
     <integer-array name="img_id_arr">
         <item>@drawable/ic_dots3</item>
         <item>@drawable/ic_dots</item>

@@ -13,14 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import kg.geektech.lvl4lesson1.Prefs;
 import kg.geektech.lvl4lesson1.R;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
     private String[] titles = new String[]{"Привет", "Hello", "おい"};
     private String[] discription = new String[]{russian(), english(), japan()};
-    private int[] drawable = new int[]{R.drawable.welcome, R.drawable.news, R.drawable.like};
+    private int[] drawable = new int[]{R.raw.ic_hi, R.raw.smile, R.raw.news};
     private Context context;
+
 
     private String english() {
         String a = "Application for news.\n" +
@@ -73,8 +76,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         private TextView textTitle, textDesc;
         private Button btnStart;
-        private ImageView image;
-
+        private LottieAnimationView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
@@ -91,9 +93,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         }
 
         public void onBind(int position) {
+
             textTitle.setText(titles[position]);
+            image.setImageResource(drawable[position]);
             textDesc.setText(discription[position]);
-            image.setImageResource(Integer.parseInt(String.valueOf(drawable[position])));
+            image.setAnimation(drawable[position]);
             if (position == titles.length - 1) {
                 btnStart.setVisibility(View.VISIBLE);
             } else {

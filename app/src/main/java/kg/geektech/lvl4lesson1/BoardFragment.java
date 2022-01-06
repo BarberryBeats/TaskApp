@@ -41,7 +41,7 @@ public class BoardFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-requireActivity().finish();
+                requireActivity().finish();
             }
         });
         binding.btnSkip.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +50,7 @@ requireActivity().finish();
                 navController.navigateUp();
             }
         });
+
 
     }
 }

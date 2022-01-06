@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,6 +18,9 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.util.List;
+
+import kg.geektech.lvl4lesson1.App;
 import kg.geektech.lvl4lesson1.News;
 import kg.geektech.lvl4lesson1.OnItemClickListener;
 import kg.geektech.lvl4lesson1.R;
@@ -28,9 +34,33 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        List<News> list = App.getInstance().getDatabase().newsDao().getAll();
         adapter = new NewsAdapter(getContext());
+        adapter.addItems(list);
+
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item2:
+                List<News> list = App.getInstance().getDatabase().newsDao().getAll();
+                adapter.addItems(list);
+                return true;
+            case R.id.item3:
+                List<News> list2 = App.getInstance().getDatabase().newsDao().getAllSortedByTitle();
+                adapter.addItems(list2);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 
     private void setAlert(int position) {
         mySimpleDialog();
@@ -40,10 +70,12 @@ public class HomeFragment extends Fragment {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                News news = adapter.getItem(position);
                 dialog.dismiss();
+                App.getInstance().getDatabase().newsDao().delete(news);
                 adapter.notifyItemRemoved(position);
                 adapter.removelist(position);
+
 
             }
         });
@@ -68,6 +100,7 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
+
     }
 
     @Override
@@ -75,9 +108,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initListener();
         create();
+        setHasOptionsMenu(true);
     }
 
-    private void create(){
+    private void create() {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onClick(int position) {
@@ -92,6 +126,7 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
     private void initListener() {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +151,6 @@ public class HomeFragment extends Fragment {
             }
 
         });
-
-
 
         initList();
     }
@@ -145,4 +178,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

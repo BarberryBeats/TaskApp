@@ -57,10 +57,12 @@ public class NewsFragment extends Fragment {
             news = new News(text, System.currentTimeMillis());
             bundle.putSerializable("news", news);
             getParentFragmentManager().setFragmentResult("rk_news", bundle);
+            App.getInstance().getDatabase().newsDao().insert(news);
         }else{
             news.setTitle(text);
             bundle.putSerializable("news", news);
             getParentFragmentManager().setFragmentResult("rk_news_update", bundle);
+            App.getInstance().getDatabase().newsDao().update(news);
         }
         close();
     }

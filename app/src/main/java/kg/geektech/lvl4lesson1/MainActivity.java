@@ -2,9 +2,12 @@ package kg.geektech.lvl4lesson1;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,17 +19,20 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import kg.geektech.lvl4lesson1.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -37,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
         Prefs prefs = new Prefs(this);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null)
+        navController.navigate(R.id.loginFragment);
         if (!prefs.isBoardShown())
             navController.navigate(R.id.boardFragment);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
@@ -50,15 +59,28 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     binding.navView.setVisibility(View.GONE);
                 }
+                if (destination.getId() == R.id.navigation_home){
+                    getSupportActionBar().show();
+                } else {
+                    getSupportActionBar().hide();
+                }
             }
         });
     }
+
+ /*   @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }*/
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d("Ray", "Дестрой");
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

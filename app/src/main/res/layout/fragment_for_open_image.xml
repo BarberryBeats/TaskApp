@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FragmentForOpenImage">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/photoAfter"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:elevation="12dp"
+        app:cardCornerRadius="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/photoAfter1"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/avatar2"
+
+            android:scaleType="centerCrop" />
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
