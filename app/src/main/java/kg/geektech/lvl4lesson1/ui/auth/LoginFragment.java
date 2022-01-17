@@ -71,8 +71,10 @@ public class LoginFragment extends Fragment {
         tv_google_name = view.findViewById(R.id.google_name);
         tv_google_email = view.findViewById(R.id.google_email);
         editTextUsername = view.findViewById(R.id.editName);
+        btnLogOut = view.findViewById(R.id.btnLogout);
         createRequest();
         mAuth = FirebaseAuth.getInstance();
+
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -85,7 +87,36 @@ public class LoginFragment extends Fragment {
                 signIn();
             }
         });
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
         initGoogle();
+    }
+     public void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity(),
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateUI(null);
+                    }
+                });
+    }
+
+    public void updateUI(FirebaseUser account){
+
+        if(account != null){
+            Toast.makeText(requireContext(),"You Signed In successfully",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(requireContext(),"You Didnt signed in",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void createRequest() {

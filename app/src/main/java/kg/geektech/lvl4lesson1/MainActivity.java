@@ -54,12 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (destination.getId() == R.id.navigation_home ||
                         destination.getId() == R.id.navigation_dashboard ||
-                        destination.getId() == R.id.navigation_profile){
+                        destination.getId() == R.id.navigation_profile ||
+                        destination.getId() == R.id.navigation_notifications){
                     binding.navView.setVisibility(View.VISIBLE);
                 }else {
                     binding.navView.setVisibility(View.GONE);
                 }
-                if (destination.getId() == R.id.navigation_home){
+                if (destination.getId() == R.id.navigation_home || destination.getId() == R.id.navigation_dashboard){
                     getSupportActionBar().show();
                 } else {
                     getSupportActionBar().hide();

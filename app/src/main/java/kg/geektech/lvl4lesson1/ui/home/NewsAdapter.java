@@ -33,7 +33,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private Context context;
     private News news;
 
-
     public NewsAdapter(Context context) {
         list = new ArrayList<>();
         this.context = context;
@@ -91,6 +90,8 @@ notifyDataSetChanged();
         notifyDataSetChanged();
     }
 
+    
+
     public String getItem1(int position) {
         return list.get(position).toString();
     }
@@ -113,7 +114,10 @@ notifyDataSetChanged();
         Collections.sort(list,newsAZComparator);
         notifyDataSetChanged();
     }
-
+    public void sort2() {
+        Collections.sort(list,newsDateComparator);
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Context context;

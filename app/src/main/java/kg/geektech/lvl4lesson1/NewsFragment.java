@@ -1,5 +1,6 @@
 package kg.geektech.lvl4lesson1;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import kg.geektech.lvl4lesson1.databinding.FragmentHomeBinding;
 import kg.geektech.lvl4lesson1.databinding.FragmentNewsBinding;
@@ -38,8 +45,9 @@ public class NewsFragment extends Fragment {
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.progressBar.setVisibility(View.VISIBLE);
                 save();
-                close();
+                binding.btnSave.setEnabled(false);
 
             }
         });
@@ -58,12 +66,31 @@ public class NewsFragment extends Fragment {
             bundle.putSerializable("news", news);
             getParentFragmentManager().setFragmentResult("rk_news", bundle);
             App.getInstance().getDatabase().newsDao().insert(news);
+            addToFirestore();
         }else{
             news.setTitle(text);
             bundle.putSerializable("news", news);
             getParentFragmentManager().setFragmentResult("rk_news_update", bundle);
             App.getInstance().getDatabase().newsDao().update(news);
         }
-        close();
+
+    }
+
+    private void addToFirestore() {
+        FirebaseFirestore.getInstance().collection("news").add(news).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                  if (task.isSuccessful()){
+                      binding.progressBar.setVisibility(View.INVISIBLE);
+                      binding.btnSave.setEnabled(true);
+                      Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+                  } else {
+                      binding.progressBar.setVisibility(View.INVISIBLE);
+                      binding.btnSave.setEnabled(true);
+                      Toast.makeText(requireContext(), "Failure", Toast.LENGTH_SHORT).show();
+                  }
+                close();
+            }
+        });
     }
 }

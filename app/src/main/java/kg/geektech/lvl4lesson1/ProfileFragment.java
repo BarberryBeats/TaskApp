@@ -35,13 +35,19 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import kg.geektech.lvl4lesson1.databinding.FragmentHomeBinding;
 import kg.geektech.lvl4lesson1.databinding.FragmentProfileBinding;
+import kg.geektech.lvl4lesson1.ui.auth.LoginFragment;
 
 
 public class ProfileFragment extends Fragment {
@@ -51,6 +57,9 @@ public class ProfileFragment extends Fragment {
     private boolean proverka = false;
     private boolean proverka2 = false;
     private boolean isImageFitToScreen;
+    private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +71,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Prefs prefs = new Prefs(getContext());
+        mAuth = FirebaseAuth.getInstance();
         putPhoto(prefs);
         initListeners();
         if (!prefs.isNameEntered().equals(""))
@@ -182,14 +192,43 @@ public class ProfileFragment extends Fragment {
         String saveResult = binding.editName.getText().toString();
         prefs.saveNameState(saveResult);
     }
+    public void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity(),
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateUI(null);
+                    }
+                });
+    }
+
+    public void updateUI(FirebaseUser account){
+
+        if(account != null){
+            Toast.makeText(requireContext(),"You Didnt signed in",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(requireContext(),"You Signed In successfully",Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     private void setAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Вы уверены что хотите выйти?");
-        builder.setMessage("при выходе приложением нельзя будет пользоваться.");
+        builder.setMessage("При выходе приложением нельзя будет пользоваться.");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                FirebaseAuth.getInstance().signOut();
+signOut();
                 dialog.dismiss();
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
                 navController.navigateUp();

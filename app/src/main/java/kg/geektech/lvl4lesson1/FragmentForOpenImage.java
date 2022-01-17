@@ -22,6 +22,7 @@ import kg.geektech.lvl4lesson1.databinding.FragmentHomeBinding;
 public class FragmentForOpenImage extends Fragment {
     private FragmentForOpenImageBinding binding;
     private Prefs prefs;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,14 +33,8 @@ public class FragmentForOpenImage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-    public void InitListener(){
-getParentFragmentManager().setFragmentResultListener("rk_image", getViewLifecycleOwner(), new FragmentResultListener() {
-    @Override
-    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        String a = result.getString("photoFull");
-        Glide.with(binding.photoAfter).load(prefs.getImage()).circleCrop().into(binding.photoAfter1);
-    }
-});
+        String a = requireArguments().getString("photoFull");
+        Glide.with(binding.photoAfter).load(a).circleCrop().into(binding.photoAfter1);
+
     }
 }
